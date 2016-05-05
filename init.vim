@@ -17,7 +17,8 @@ Plug 'tpope/vim-surround'
 Plug 'mhinz/vim-grepper'
 Plug 'klen/python-mode'
 Plug 'SirVer/ultisnips'
-Plug 'https://github.com/python-rope/ropevim'
+Plug 'python-rope/ropevim'
+Plug 'https://github.com/Shougo/deoplete.nvim.git'
 
 call plug#end()
 
@@ -25,18 +26,18 @@ call plug#end()
 
 " Show the safe character limit
 " This should be done BEFORE setting the colour scheme
-let &colorcolumn=join(range(80,999),",")
+let &colorcolumn=join(range(80,80),",")
 highlight ColorColumn guibg=#111111
 highlight ColorColumn ctermbg=255
 
 
 " Set a default colorscheme
 " set t_Co=256
-" colorscheme Tomorrow
+colorscheme Tomorrow
 " colorscheme Tomorrow-Night
 " colorscheme soda
 " colorscheme apprentice
-colorscheme hybrid_material
+" colorscheme hybrid_material
 
 
 " faster redraw
@@ -95,7 +96,7 @@ set list
 set relativenumber  " relative line numbers
 set number  " show line numbers
 set tw=80   " width of document (used by gd)
-" set nowrap  " don't automatically wrap on load
+set nowrap  " don't automatically wrap on load
 set fo-=t   " don't automatically wrap text when typing
 
 
@@ -199,6 +200,8 @@ map <Leader>l :PymodeLint<CR>
 let g:user_emmet_install_global = 0
 autocmd FileType xhtml,html,htmldjango,css,less EmmetInstall
 
+" deoplete
+let g:deoplete#enable_at_startup = 1
 
 " Better navigating through omnicomplete option list
 " See http://stackoverflow.com/questions/2170023/how-to-map-keys-for-popup-menu-in-vim
