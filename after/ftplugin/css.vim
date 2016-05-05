@@ -1,4 +1,4 @@
-setlocal noet
-setlocal ci
-setlocal pi
-setlocal sts=0
+" setlocal noet
+" setlocal ci
+" setlocal pi
+" setlocal sts=0
