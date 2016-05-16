@@ -15,9 +15,11 @@ Plug 'benekastah/neomake'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-surround'
 Plug 'mhinz/vim-grepper'
-Plug 'klen/python-mode'
 Plug 'SirVer/ultisnips'
-Plug 'python-rope/ropevim'
+Plug 'airblade/vim-gitgutter'
+Plug 'davidhalter/jedi-vim'
+" Plug 'klen/python-mode'
+" Plug 'python-rope/ropevim'
 Plug 'https://github.com/Shougo/deoplete.nvim.git'
 
 call plug#end()
@@ -179,21 +181,27 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/venv/*
 
 
-" Settings for python-mode and rope
-let ropevim_enable_shortcuts = 1
-let g:pymode_rope_goto_def_newwin = "vnew"
-let g:pymode_rope_extended_complete = 1
-let g:pymode_breakpoint = 0
-let g:pymode_motion = 1
-let g:pymode_syntax = 1
-let g:pymode_syntax_builtin_objs = 0
-let g:pymode_syntax_builtin_funcs = 0
-let g:pymode_lint_on_write = 0
-let g:pymode_lint_ignore = "E501,W"
-let g:pymode_rope_complete_on_dot = 0
+" Settings for Jedi-Vim
+let g:jedi#use_tabs_not_buffers = 1
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#completions_command = "<C-Space>"
 
-map <Leader>g :RopeGotoDefinition<CR>
-map <Leader>l :PymodeLint<CR>
+" Settings for python-mode and rope
+" let ropevim_enable_shortcuts = 1
+" let g:pymode_rope_goto_def_newwin = "vnew"
+" let g:pymode_rope_extended_complete = 1
+" let g:pymode_breakpoint = 0
+" let g:pymode_motion = 1
+" let g:pymode_syntax = 1
+" let g:pymode_syntax_builtin_objs = 0
+" let g:pymode_syntax_builtin_funcs = 0
+" let g:pymode_lint_on_write = 0
+" let g:pymode_lint_ignore = "E501,W"
+" let g:pymode_rope_complete_on_dot = 0
+" 
+" map <Leader>g :RopeGotoDefinition<CR>
+" map <Leader>l :PymodeLint<CR>
 
 " Emmet
 " Only use emmet in html and css files
