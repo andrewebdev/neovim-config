@@ -35,11 +35,11 @@ highlight ColorColumn ctermbg=255
 
 " Set a default colorscheme
 " set t_Co=256
-colorscheme Tomorrow
+" colorscheme Tomorrow
 " colorscheme Tomorrow-Night
 " colorscheme soda
 " colorscheme apprentice
-" colorscheme hybrid_material
+colorscheme hybrid_material
 
 
 " faster redraw
@@ -186,6 +186,7 @@ let g:jedi#use_tabs_not_buffers = 1
 let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#completions_command = "<C-Space>"
+let g:jedi#usages_command = "<leader>N"
 
 " Settings for python-mode and rope
 " let ropevim_enable_shortcuts = 1
