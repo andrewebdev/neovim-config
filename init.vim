@@ -167,6 +167,7 @@ let g:airline_powerline_fonts = 1
 
 " Neomake settings
 autocmd! BufWritePost * Neomake
+let g:neomake_python_enabled_makers = ['flake8']
 
 
 " Settings for ctrlp
