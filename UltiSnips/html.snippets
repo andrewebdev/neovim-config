@@ -1,22 +1,22 @@
 snippet module
 <dom-module id="$1">
-    <style>
-        $2
-    </style>
-    <template>
-        $3
-    </template>
+	<style>
+		$2
+	</style>
+	<template>
+		$3
+	</template>
 </dom-module>
 <script>
-    (function() {
-        'use strict';
+	(function() {
+		'use strict';
 
-        Polymer({
-            is: '$1'
-        });
+		Polymer({
+			is: '$1'
+		});
 
-    })();
-</script>
+	})();
+	</script>
 endsnippet
 
 snippet dextends
@@ -33,35 +33,35 @@ endsnippet
 
 snippet dif
 {% if $1 %}
-    $2
+	$2
 {% endif %}
 endsnippet
 
 snippet difelse
 {% if $1 %}
-    $2
+	$2
 {% else %}
-    $3
+	$3
 {% endif %}
 endsnippet
 
 snippet dfor
 {% for $1 %}
-    $2
+	$2
 {% empty %}
-    $3
+	$3
 {% endfor %}
 endsnippet
 
 snippet dwith
 {% with $1 as $2 %}
-    $3
+	$3
 {% endwith %}
 endsnippet
 
 snippet dcomment
 {% comment %}
-    $1
+	$1
 {% endcomment %}
 endsnippet
 
