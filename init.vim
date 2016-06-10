@@ -19,6 +19,7 @@ Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
 Plug 'davidhalter/jedi-vim'
 Plug 'klen/python-mode'
+Plug 'fatih/vim-go'
 Plug 'https://github.com/Shougo/deoplete.nvim.git'
 
 call plug#end()
