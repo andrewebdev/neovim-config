@@ -18,8 +18,7 @@ Plug 'mhinz/vim-grepper'
 Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
 Plug 'davidhalter/jedi-vim'
-" Plug 'klen/python-mode'
-" Plug 'python-rope/ropevim'
+Plug 'klen/python-mode'
 Plug 'https://github.com/Shougo/deoplete.nvim.git'
 
 call plug#end()
@@ -189,21 +188,16 @@ let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#usages_command = "<leader>N"
 
-" Settings for python-mode and rope
-" let ropevim_enable_shortcuts = 1
-" let g:pymode_rope_goto_def_newwin = "vnew"
-" let g:pymode_rope_extended_complete = 1
-" let g:pymode_breakpoint = 0
-" let g:pymode_motion = 1
-" let g:pymode_syntax = 1
-" let g:pymode_syntax_builtin_objs = 0
-" let g:pymode_syntax_builtin_funcs = 0
-" let g:pymode_lint_on_write = 0
-" let g:pymode_lint_ignore = "E501,W"
-" let g:pymode_rope_complete_on_dot = 0
-" 
-" map <Leader>g :RopeGotoDefinition<CR>
-" map <Leader>l :PymodeLint<CR>
+" Settings for python-mode
+" disable rope since we use jedi
+let pymode_rope = 0
+let ropevim_enable_shortcuts = 0
+let g:pymode_breakpoint = 0
+let g:pymode_motion = 0
+let g:pymode_syntax = 0
+let g:pymode_syntax_builtin_objs = 0
+let g:pymode_syntax_builtin_funcs = 0
+let g:pymode_lint_on_write = 0
 
 " Emmet
 " Only use emmet in html and css files
