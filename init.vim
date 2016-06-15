@@ -163,6 +163,12 @@ map <F9> :NERDTree<CR>
 
 " vim-airline settings
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#whitespace#enabled = 0
+
+" Nicer tabline, but use rectangular sides
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 
 " Neomake settings
