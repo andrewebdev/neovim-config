@@ -1,31 +1,53 @@
 snippet ticket
 *Changeset*
+
 $1
 
 *What's Been Changed*
-$2
 
 *Expected Results*
-$3
 
 *Possible Affected Area(s)*
-$4
 
 *Additional Information*
-$5
+
 endsnippet
 
 
-snippet panel
+snippet Jira-panel
 {panel:title=$1}
 $2
 {panel}
 endsnippet
 
 
-snippet testpanel
+snippet Jira-release
+{panel:title=(!) Release Notes|borderColor=red}
+$1
+{panel}
+endsnippet
+
+
+snippet Jira-test
 {panel:title=Test Instructions}
 $1
 {panel}
+endsnippet
+
+
+snippet TDView
+### ${1:view_definition}
+
+App
+${2:apps.example}
+
+URL patterns
+${3:/path/to/view}
+
+Access Control
+$4
+
+Behaviour
+$5
 endsnippet
 

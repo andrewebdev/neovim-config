@@ -5,6 +5,7 @@ set encoding=utf-8
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'flazz/vim-colorschemes'
+Plug 'juanedi/predawn.vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'mattn/emmet-vim'
@@ -40,6 +41,7 @@ highlight ColorColumn ctermbg=255
 " colorscheme soda
 " colorscheme apprentice
 colorscheme hybrid_material
+" colorscheme predawn
 
 
 " faster redraw
