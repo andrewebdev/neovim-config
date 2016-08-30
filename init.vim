@@ -36,11 +36,11 @@ highlight ColorColumn ctermbg=255
 
 " Set a default colorscheme
 " set t_Co=256
-" colorscheme Tomorrow
+colorscheme Tomorrow
 " colorscheme Tomorrow-Night
 " colorscheme soda
 " colorscheme apprentice
-colorscheme hybrid_material
+" colorscheme hybrid_material
 " colorscheme predawn
 
 
@@ -188,6 +188,7 @@ set wildignore+=*_build/*
 set wildignore+=*/coverage/*
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/venv/*
+set wildignore+=*/nginx/*
 
 
 " Settings for Jedi-Vim

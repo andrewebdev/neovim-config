@@ -36,18 +36,38 @@ endsnippet
 
 
 snippet TDView
-### ${1:view_definition}
+### ${1:view_name}
 
-App
+App 
 ${2:apps.example}
 
-URL patterns
+URL patterns 
 ${3:/path/to/view}
 
-Access Control
+Access Control 
 $4
 
-Behaviour
+Behaviour 
 $5
+
+Development 
+$6
+endsnippet
+
+
+snippet TDModel
+### ${1:ModelName}
+
+App 
+${2:apps.example}
+
+Definition 
+
+|Field|Type|Notes|
+|-----|----|-----|
+| ${3}
+
+Methods 
+${4}
 endsnippet
 
