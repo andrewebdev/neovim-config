@@ -12,6 +12,7 @@ Plug 'mattn/emmet-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'benekastah/neomake'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-surround'
@@ -29,19 +30,18 @@ call plug#end()
 
 " Show the safe character limit
 " This should be done BEFORE setting the colour scheme
+set t_Co=256
 let &colorcolumn=join(range(80,80),",")
 highlight ColorColumn guibg=#111111
 highlight ColorColumn ctermbg=255
 
 
 " Set a default colorscheme
-" set t_Co=256
-colorscheme Tomorrow
+" colorscheme Tomorrow
 " colorscheme Tomorrow-Night
 " colorscheme soda
-" colorscheme apprentice
 " colorscheme hybrid_material
-" colorscheme predawn
+colorscheme solarized
 
 
 " faster redraw
@@ -189,6 +189,9 @@ set wildignore+=*/coverage/*
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/venv/*
 set wildignore+=*/nginx/*
+
+" Map to quickly open most recent files
+nnoremap <leader>f :CtrlPMRUFiles<cr>
 
 
 " Settings for Jedi-Vim
