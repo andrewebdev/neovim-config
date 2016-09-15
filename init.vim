@@ -5,7 +5,6 @@ set encoding=utf-8
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'flazz/vim-colorschemes'
-Plug 'juanedi/predawn.vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'mattn/emmet-vim'
@@ -23,6 +22,8 @@ Plug 'davidhalter/jedi-vim'
 Plug 'klen/python-mode'
 Plug 'fatih/vim-go'
 Plug 'https://github.com/Shougo/deoplete.nvim.git'
+Plug 'chadburrus/confluencewiki.vim'
+Plug 'jacoborus/tender'
 
 call plug#end()
 
@@ -30,7 +31,8 @@ call plug#end()
 
 " Show the safe character limit
 " This should be done BEFORE setting the colour scheme
-set t_Co=256
+" set t_Co=256
+set termguicolors  " enable true colour in neovim
 let &colorcolumn=join(range(80,80),",")
 highlight ColorColumn guibg=#111111
 highlight ColorColumn ctermbg=255
@@ -38,10 +40,9 @@ highlight ColorColumn ctermbg=255
 
 " Set a default colorscheme
 " colorscheme Tomorrow
-" colorscheme Tomorrow-Night
+colorscheme Tomorrow-Night
 " colorscheme soda
 " colorscheme hybrid_material
-colorscheme solarized
 
 
 " faster redraw
@@ -251,3 +252,7 @@ endfunction
 
 " Override indentation for yaml files
 au FileType yaml setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
+
+
+" Confluence Wiki (Jira) syntax
+au BufNewFile,BufRead *.jira set filetype=confluencewiki
