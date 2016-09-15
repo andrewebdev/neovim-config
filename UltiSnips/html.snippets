@@ -4,23 +4,19 @@ endsnippet
 
 snippet module
 <dom-module id="$1">
-    <style>
-        $2
-    </style>
     <template>
+        <style>
+            $2
+        </style>
         $3
     </template>
-</dom-module>
-<script>
-    (function() {
-        'use strict';
 
+    <script>
         Polymer({
             is: '$1'
         });
-
-    })();
-</script>
+    </script>
+</dom-module>
 endsnippet
 
 snippet dextends
