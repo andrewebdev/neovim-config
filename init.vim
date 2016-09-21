@@ -23,7 +23,7 @@ Plug 'klen/python-mode'
 Plug 'fatih/vim-go'
 Plug 'https://github.com/Shougo/deoplete.nvim.git'
 Plug 'chadburrus/confluencewiki.vim'
-Plug 'jacoborus/tender'
+Plug 'tpope/vim-capslock'
 
 call plug#end()
 
