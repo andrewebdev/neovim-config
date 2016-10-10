@@ -23,6 +23,7 @@ Plug 'klen/python-mode'
 Plug 'fatih/vim-go'
 Plug 'https://github.com/Shougo/deoplete.nvim.git'
 Plug 'chadburrus/confluencewiki.vim'
+Plug 'tmhedberg/matchit'
 
 call plug#end()
 
@@ -31,6 +32,7 @@ call plug#end()
 " Show the safe character limit
 " This should be done BEFORE setting the colour scheme
 " set t_Co=256
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors  " enable true colour in neovim
 let &colorcolumn=join(range(80,80),",")
 highlight ColorColumn guibg=#111111
@@ -153,6 +155,15 @@ syntax on
 
 " Hide the mouse when typing text
 set mousehide
+
+" Maximize current window split
+noremap <c-o> <c-w>_ <c-w>\|
+" Getting back to normal is simple enough with <c-w>=
+" So I'm not mapping a shortcut for that
+
+" Shortcut to run a command using args on the current line, and paste
+" the output dirjctly into the current buffer
+noremap <leader>r !!$SHELL<cr>
 
 
 " ============================================================================
