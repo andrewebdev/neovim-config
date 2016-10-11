@@ -193,6 +193,7 @@ set wildignore+=*/nginx/*
 
 " Map to quickly open most recent files
 nnoremap <leader>f :CtrlPMRUFiles<cr>
+nnoremap <leader>b :CtrlPBuffer<cr>
 
 
 " Settings for Jedi-Vim
