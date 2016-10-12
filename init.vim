@@ -4,27 +4,38 @@ set encoding=utf-8
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'flazz/vim-colorschemes'
+" Utility
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'airblade/vim-gitgutter'
+Plug 'benekastah/neomake'
+Plug 'tpope/vim-capslock'
+Plug 'tpope/vim-surround'
+Plug 'SirVer/ultisnips'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'mattn/emmet-vim'
-Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'benekastah/neomake'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-capslock'
 Plug 'mhinz/vim-grepper'
-Plug 'SirVer/ultisnips'
-Plug 'airblade/vim-gitgutter'
+
+" NerdTree
+Plug 'scrooloose/nerdtree'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Coding
 Plug 'davidhalter/jedi-vim'
 Plug 'klen/python-mode'
 Plug 'fatih/vim-go'
 Plug 'https://github.com/Shougo/deoplete.nvim.git'
-Plug 'chadburrus/confluencewiki.vim'
 Plug 'tmhedberg/matchit'
+
+" Syntax, colors and overall look
+Plug 'flazz/vim-colorschemes'
+Plug 'chadburrus/confluencewiki.vim'
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -194,6 +205,7 @@ set wildignore+=*_build/*
 set wildignore+=*/coverage/*
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/venv/*
+set wildignore+=*/venv.*
 
 " Map to quickly open most recent files
 nnoremap <leader>f :CtrlPMRUFiles<cr>
@@ -241,6 +253,13 @@ endfunction
 inoremap <silent><C-j> <C-R>=OmniPopup('j')<CR>
 inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
 
+" Set up webdev icons
+let g:webdevicons_enable = 1
+let g:webdevicons_enable_nerdtree = 1
+let g:webdevicons_enable_airline_statusline = 1
+let g:webdevicons_enable_airline_tabline = 1
+let g:webdevicons_enable_ctrlp = 1
+let g:webdevicons_conceal_nerdtree_brackets = 1
 
 " Custom function to change 2 space indent to 4
 function NewIndent()
