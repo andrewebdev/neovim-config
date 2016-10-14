@@ -44,9 +44,12 @@ call plug#end()
 
 " Show the safe character limit
 " This should be done BEFORE setting the colour scheme
-" set t_Co=256
+set t_Co=256
+
+" Unfortunately the true colour settings doesnt work in tmux
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-set termguicolors  " enable true colour in neovim
+" set termguicolors  " enable true colour in neovim
+
 let &colorcolumn=join(range(80,80),",")
 highlight ColorColumn guibg=#111111
 highlight ColorColumn ctermbg=255
@@ -54,9 +57,8 @@ highlight ColorColumn ctermbg=255
 
 " Set a default colorscheme
 " colorscheme Tomorrow
-colorscheme Tomorrow-Night
-" colorscheme soda
-" colorscheme hybrid_material
+" colorscheme Tomorrow-Night
+colorscheme soda
 
 
 " faster redraw
