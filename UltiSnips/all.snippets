@@ -1,33 +1,39 @@
-snippet ticket
-*Changeset*
-$1
+snippet TDView
+### ${1:view_name}
 
-*What's Been Changed*
-$2
+App 
+${2:apps.example}
 
-*Expected Results*
-$3
+URL patterns 
+${3:/path/to/view}
 
-*Possible Affected Area(s)*
+Access Control 
 $4
 
-*Additional Information*
+Behaviour 
 $5
 
+Development 
+$6
 endsnippet
 
-snippet card
-# Overview
-$1
 
-## UX & Design
-TBD
+snippet TDModel
+### ${1:ModelName}
 
-## Development
+App 
+${2:apps.example}
 
-## Testing
+Definition 
 
+|Field|Type|Notes|
+|-----|----|-----|
+| ${3}
+
+Methods 
+${4}
 endsnippet
+
 
 snippet doctypejs
 /**

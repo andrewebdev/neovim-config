@@ -45,7 +45,7 @@ call plug#end()
 " Show the safe character limit
 " This should be done BEFORE setting the colour scheme
 " set t_Co=256
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors  " enable true colour in neovim
 let &colorcolumn=join(range(80,80),",")
 highlight ColorColumn guibg=#111111
@@ -189,6 +189,13 @@ map <F9> :NERDTree<CR>
 
 " vim-airline settings
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#whitespace#enabled = 0
+
+" Nicer tabline, but use rectangular sides
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 
 " Neomake settings
@@ -206,14 +213,15 @@ set wildignore+=*_build/*
 set wildignore+=*/coverage/*
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/venv/*
+set wildignore+=*/nginx/*
 set wildignore+=*/venv.*
 
 " Settings for Unite
 let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <leader>u :Unite -start-insert<cr>
-nnoremap <leader>f :Unite -buffer-name=files -start-insert file_rec<cr>
-nnoremap <leader>b :Unite -buffer-name=buffers -start-insert buffer<cr>
+let g:unite_split_rule = 'botright'
+let g:unite_source_file_mru_limit = 300
+nnoremap <leader>f :<C-u>Unite -start-insert file_rec/neovim<cr>
+nnoremap <leader>b :<C-u>Unite buffer bookmark<cr>
 
 " Settings for Jedi-Vim
 let g:jedi#use_tabs_not_buffers = 1
