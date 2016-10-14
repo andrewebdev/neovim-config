@@ -45,7 +45,7 @@ call plug#end()
 " Show the safe character limit
 " This should be done BEFORE setting the colour scheme
 " set t_Co=256
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors  " enable true colour in neovim
 let &colorcolumn=join(range(80,80),",")
 highlight ColorColumn guibg=#111111
