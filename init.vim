@@ -218,10 +218,12 @@ set wildignore+=*/venv.*
 
 " Settings for Unite
 let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <leader>u :Unite -start-insert<cr>
-nnoremap <leader>f :Unite -buffer-name=files -start-insert file_rec<cr>
-nnoremap <leader>b :Unite -buffer-name=buffers -start-insert buffer<cr>
+let g:unite_split_rule = 'botright'
+let g:unite_source_file_mru_limit = 300
+
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>f :<C-u>Unite -start-insert file_rec/neovim<cr>
+nnoremap <leader>b :<C-u>Unite buffer bookmark<cr>
 
 " Settings for Jedi-Vim
 let g:jedi#use_tabs_not_buffers = 1
