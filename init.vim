@@ -13,6 +13,7 @@ Plug 'tpope/vim-capslock'
 Plug 'tpope/vim-surround'
 Plug 'SirVer/ultisnips'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'Shougo/unite.vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'mattn/emmet-vim'
@@ -214,10 +215,12 @@ set wildignore+=*/venv/*
 set wildignore+=*/nginx/*
 set wildignore+=*/venv.*
 
-" Map to quickly open most recent files
-nnoremap <leader>f :CtrlPMRUFiles<cr>
-nnoremap <leader>b :CtrlPBuffer<cr>
-
+" Settings for Unite
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>u :Unite -start-insert<cr>
+nnoremap <leader>f :Unite -buffer-name=files -start-insert file_rec<cr>
+nnoremap <leader>b :Unite -buffer-name=buffers -start-insert buffer<cr>
 
 " Settings for Jedi-Vim
 let g:jedi#use_tabs_not_buffers = 1
