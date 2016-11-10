@@ -18,6 +18,7 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'mattn/emmet-vim'
 Plug 'mhinz/vim-grepper'
+Plug 'vimwiki/vimwiki'
 
 " NerdTree
 Plug 'scrooloose/nerdtree'
@@ -37,6 +38,8 @@ Plug 'tmhedberg/matchit'
 Plug 'flazz/vim-colorschemes'
 Plug 'chadburrus/confluencewiki.vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'vim-scripts/moin.vim'
+Plug 'mhinz/vim-janah'
 
 call plug#end()
 
@@ -44,11 +47,11 @@ call plug#end()
 
 " Show the safe character limit
 " This should be done BEFORE setting the colour scheme
-set t_Co=256
+" set t_Co=256
 
 " Unfortunately the true colour settings doesnt work in tmux
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-" set termguicolors  " enable true colour in neovim
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set termguicolors  " enable true colour in neovim
 
 let &colorcolumn=join(range(80,80),",")
 highlight ColorColumn guibg=#111111
@@ -56,9 +59,11 @@ highlight ColorColumn ctermbg=255
 
 
 " Set a default colorscheme
+autocmd ColorScheme janah highlight Normal ctermbg=235
+colorscheme janah
 " colorscheme Tomorrow
 " colorscheme Tomorrow-Night
-colorscheme soda
+" colorscheme soda
 
 
 " faster redraw
@@ -224,7 +229,8 @@ let g:unite_split_rule = 'botright'
 let g:unite_source_file_mru_limit = 300
 
 " call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <leader>f :<C-u>Unite -start-insert file_rec/neovim<cr>
+" nnoremap <leader>f :<C-u>Unite -start-insert file_rec/neovim<cr>
+nnoremap <leader>f :<C-u>Unite file_rec<cr>
 nnoremap <leader>b :<C-u>Unite buffer bookmark<cr>
 
 " Settings for Jedi-Vim
@@ -232,7 +238,7 @@ let g:jedi#use_tabs_not_buffers = 1
 let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#completions_command = "<C-Space>"
-let g:jedi#usages_command = "<leader>N"
+let g:jedi#usages_command = "<leader>u"
 
 " Settings for python-mode
 " disable rope since we use jedi
