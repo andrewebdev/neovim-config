@@ -1,0 +1,96 @@
+###########################
+# Sections and Paragraphs #
+###########################
+snippet h1 "Section" b
+# ${1:Section Name}
+$0
+endsnippet
+
+snippet h2 "Sub Section" b
+## ${1:Section Name}
+$0
+endsnippet
+
+snippet h3 "SubSub Section" b
+### ${1:Section Name}
+$0
+endsnippet
+
+snippet link "Link to something"
+[${1:${VISUAL:Text}}](${3:http://${2:www.url.com}})$0
+endsnippet
+
+snippet img "Image"
+![${1:pic alt}](${2:path}${3/.+/ "/}${3:opt title}${3/.+/"/})$0
+endsnippet
+
+snippet code "Codeblock" b
+\`\`\`
+$1
+\`\`\`
+$0
+endsnippet
+
+snippet refl "Reference Link"
+[${1:${VISUAL:Text}}][${2:id}]$0
+
+[$2]:${4:http://${3:www.url.com}} "${5:$4}"
+endsnippet
+
+snippet fnt "Footnote"
+[^${1:${VISUAL:Footnote}}]$0
+
+[^$1]:${2:Text}
+endsnippet
+
+post_jump "create_table(snip)"
+snippet "tb(\d+x\d+)" "Customizable table" br
+`!p snip.rv = match.group(1)`
+endsnippet
+
+snippet bug "Create Bug Report"
+## Description
+
+${1:_A short description of the error_}
+
+## Expected
+
+${2:_Describe or summarize what the expected behaviour is._}
+
+## Actual
+
+${3:_Describe or summarize what is actually happening_}
+
+## Affects
+
+${3:_Make a note of which browsers or devices are affected by this bug_}
+
+endsnippet
+
+snippet task "Create a task/feature"
+# Overview
+This will be the general overview of what the intention is behind the card and
+how it should function. This should be simple and care should be taken so that
+each card is a single little unit or feature. If it starts to become more
+complex, add subtasks to the card to define them clearly. Those subtasks can
+then be converted into cards of their own.
+
+## UX & Design
+Anything related to the design for this feature. The relevant information that a
+developer/designer should know about should be clearly separated from paragraphs
+of text so that it's clear what should be done; For example:
+
+* background color: #e3e3e3;
+* foreground color: #0e0e0e;
+* 1px border
+
+## Development
+How will this be implemented? This is a technical overview of the task and how
+it's expected to work. No need to be super detailed, but the most important
+information should be available.
+
+## Testing
+How will testers go about testing this feature? This includes how it should
+interact, what they should expect when clicking on various buttons, what are the
+kind of actions that can be taken etc.
+endsnippet

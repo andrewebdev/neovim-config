@@ -18,6 +18,7 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'mattn/emmet-vim'
 Plug 'mhinz/vim-grepper'
+Plug 'vimwiki/vimwiki'
 
 " NerdTree
 Plug 'scrooloose/nerdtree'
@@ -37,26 +38,28 @@ Plug 'tmhedberg/matchit'
 Plug 'flazz/vim-colorschemes'
 Plug 'chadburrus/confluencewiki.vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'mhinz/vim-janah'
 
 call plug#end()
 
 " Put your non-Plugin stuff after this line
 
-" Show the safe character limit
 " This should be done BEFORE setting the colour scheme
-" set t_Co=256
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors  " enable true colour in neovim
+
+" Show the safe character limit
 let &colorcolumn=join(range(80,80),",")
 highlight ColorColumn guibg=#111111
 highlight ColorColumn ctermbg=255
 
-
 " Set a default colorscheme
 " colorscheme Tomorrow
-colorscheme Tomorrow-Night
+" colorscheme Tomorrow-Night
 " colorscheme soda
-" colorscheme hybrid_material
+colorscheme hybrid_material
+" autocmd ColorScheme janah highlight Normal ctermbg=235
+" colorscheme janah
 
 
 " faster redraw
@@ -178,14 +181,26 @@ noremap <c-o> <c-w>_ <c-w>\|
 " the output dirjctly into the current buffer
 noremap <leader>r !!$SHELL<cr>
 
+" Global wildignore rules
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=*/coverage/*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=*/venv/*
+set wildignore+=*/nginx/*
+set wildignore+=*/venv.*
 
 " ============================================================================
 " Plugins Setup
 " ============================================================================
 
+" VimWiki
+let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/', 'path_html': '~/Dropbox/vimwiki_html/'}]
+
+
 " NerdTree
 map <F9> :NERDTree<CR>
-
+let g:NERDTreeRespectWildIgnore = 1
 
 " vim-airline settings
 let g:airline_powerline_fonts = 1
@@ -208,19 +223,12 @@ let g:neomake_python_enabled_makers = ['flake8']
 " git clone https://github.com/kien/ctrlp.vim.git
 let g:ctrlp_max_height = 30
 let g:ctrlp_working_path_mode = 0
-set wildignore+=*.pyc
-set wildignore+=*_build/*
-set wildignore+=*/coverage/*
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-set wildignore+=*/venv/*
-set wildignore+=*/nginx/*
-set wildignore+=*/venv.*
 
 " Settings for Unite
 let g:unite_source_history_yank_enable = 1
 let g:unite_split_rule = 'botright'
 let g:unite_source_file_mru_limit = 300
-nnoremap <leader>f :<C-u>Unite -start-insert file_rec/neovim<cr>
+nnoremap <leader>f :<C-u>Unite file_rec<cr>
 nnoremap <leader>b :<C-u>Unite buffer bookmark<cr>
 
 " Settings for Jedi-Vim
@@ -228,7 +236,7 @@ let g:jedi#use_tabs_not_buffers = 1
 let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#completions_command = "<C-Space>"
-let g:jedi#usages_command = "<leader>N"
+let g:jedi#usages_command = "<leader>u"
 
 " Settings for python-mode
 " disable rope since we use jedi
