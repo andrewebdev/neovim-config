@@ -1,19 +1,14 @@
-set nocompatible
-set encoding=utf-8
-
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
 
 " Utility
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-capslock'
 Plug 'tpope/vim-surround'
 Plug 'SirVer/ultisnips'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Shougo/unite.vim'
+Plug 'Shougo/denite.nvim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'mattn/emmet-vim'
@@ -29,24 +24,30 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Coding
 Plug 'davidhalter/jedi-vim'
-Plug 'klen/python-mode'
+" Plug 'klen/python-mode'
 Plug 'fatih/vim-go'
 Plug 'https://github.com/Shougo/deoplete.nvim.git'
-Plug 'tmhedberg/matchit'
 
 " Syntax, colors and overall look
-Plug 'flazz/vim-colorschemes'
-Plug 'chadburrus/confluencewiki.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
+Plug 'Raimondi/delimitMate'
+Plug 'flazz/vim-colorschemes'
 Plug 'mhinz/vim-janah'
+" Highlight html tags
+Plug 'valloric/MatchTagAlways'
 
 call plug#end()
 
 " Put your non-Plugin stuff after this line
+set nocompatible
+scriptencoding utf8
+set encoding=utf-8
 
 " This should be done BEFORE setting the colour scheme
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors  " enable true colour in neovim
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Show the safe character limit
 let &colorcolumn=join(range(80,80),",")
@@ -57,24 +58,29 @@ highlight ColorColumn ctermbg=255
 " colorscheme Tomorrow
 " colorscheme Tomorrow-Night
 " colorscheme soda
-colorscheme hybrid_material
 " autocmd ColorScheme janah highlight Normal ctermbg=235
 " colorscheme janah
+colorscheme leya
 
 
 " faster redraw
 set ttyfast
 
+" Set scrollback limit
+set scrollback=1
+
 " Better copy & paste
 " When you want to paste large blocks of code into vim, press F2 before you
 " paste. At the bottom you should see ``-- INSERT (paste) --``.
 set pastetoggle=<F2>
-set clipboard=unnamed
+set clipboard+=unnamed
 
 
 " Rebind <Leader> key
 let mapleader = ","
 
+" Turn of ex mode
+nnoremap Q <nop>
 
 " Bind nohl
 " Removes highlight of your last search
@@ -98,8 +104,8 @@ map <c-h> <c-w>h
 
 
 " easier moving between tabs
-map <Leader>n <esc>:tabprevious<CR>
-map <Leader>m <esc>:tabnext<CR>
+map <Leader>n :tabprevious<CR>
+map <Leader>m :tabnext<CR>
 
 
 " easier moving of code blocks
@@ -141,6 +147,9 @@ set softtabstop=4
 set shiftwidth=4
 set shiftround
 set expandtab
+
+" Automatic spell checking in markdown files
+autocmd BufRead,BufNewFile *.md setlocal spell complete+=kspell
 
 " Space vs Tab Switching
 " Some people and projects insist on tabs however, so this
@@ -189,6 +198,8 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/venv/*
 set wildignore+=*/nginx/*
 set wildignore+=*/venv.*
+set wildignore+=*/__pycache__/*
+
 
 " ============================================================================
 " Plugins Setup
@@ -205,12 +216,8 @@ let g:NERDTreeRespectWildIgnore = 1
 " vim-airline settings
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#whitespace#enabled = 0
-
-" Nicer tabline, but use rectangular sides
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
 
 
 " Neomake settings
@@ -218,18 +225,78 @@ autocmd! BufWritePost * Neomake
 let g:neomake_python_enabled_makers = ['flake8']
 
 
-" Settings for ctrlp
-" cd ~/.vim/bundle
-" git clone https://github.com/kien/ctrlp.vim.git
-let g:ctrlp_max_height = 30
-let g:ctrlp_working_path_mode = 0
+" Denite
+nnoremap <leader>f :Denite -mode=normal file<cr>
+nnoremap <leader>F :Denite -mode=normal file_rec<cr>
+nnoremap <leader>b :Denite -mode=normal buffer<cr>
+nnoremap <leader>M :Denite -mode=normal menu<cr>
 
-" Settings for Unite
-let g:unite_source_history_yank_enable = 1
-let g:unite_split_rule = 'botright'
-let g:unite_source_file_mru_limit = 300
-nnoremap <leader>f :<C-u>Unite file_rec<cr>
-nnoremap <leader>b :<C-u>Unite buffer bookmark<cr>
+" Denite - Options
+call denite#custom#option('default', {'prompt': '❯'})
+call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
+call denite#custom#option('_', 'highlight_matched_range', 'None')
+call denite#custom#option('_', 'highlight_matched_char', 'None')
+
+if executable('rg')
+  call denite#custom#var('file_rec', 'command',
+        \['rg', '--files', '--glob', '!.git'])
+  call denite#custom#var('grep', 'command', ['rg', '--threads', '1'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'final_opts', [])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'default_opts',
+        \['--vimgrep', '--no-heading'])
+else
+  call denite#custom#var('file_rec', 'command',
+        \['ag', '--nofollow', '--nocolor', '--nogroup', '-g', ''])
+endif
+
+call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy', 'matcher_ignore_globs'])
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+      \['.git/', '.ropeproject/', '__pycache__/', '*.pyc', 'venv/', '*.min.*',
+      \ 'bower_components/', 'node_modules/'])
+
+
+" Denite - Mappings
+call denite#custom#map(
+    \'insert',
+    \'<Esc>',
+    \'<denite:enter_mode:normal>',
+    \'noremap')
+call denite#custom#map(
+    \'normal',
+    \'<Esc>',
+    \'<NOP>',
+    \'noremap')
+call denite#custom#map(
+    \'insert',
+    \'<C-v>',
+    \'<denite:do_action:vsplit>',
+    \'noremap')
+call denite#custom#map(
+    \'normal',
+    \'<C-v>',
+    \'<denite:do_action:vsplit>',
+    \'noremap')
+call denite#custom#map(
+    \'insert',
+    \'<C-j>',
+    \'<denite:move_to_next_line>',
+    \'noremap')
+call denite#custom#map(
+    \'insert',
+    \'<C-k>',
+    \'<denite:move_to_previous_line>',
+    \'noremap')
+
+" Denite - Menus
+let s:menus = {}
+let s:menus.configs = {'description': 'Configs and temp files'}
+let s:menus.configs.file_candidates = [
+    \['init.vim', '~/.config/nvim/init.vim'],
+    \['temp.md', '~/temp.md']]
+call denite#custom#var('menu', 'menus', s:menus)
+
 
 " Settings for Jedi-Vim
 let g:jedi#use_tabs_not_buffers = 1
@@ -253,6 +320,9 @@ let g:pymode_lint_on_write = 0
 " Only use emmet in html and css files
 let g:user_emmet_install_global = 0
 autocmd FileType xhtml,html,htmldjango,css,less EmmetInstall
+
+" Ultisnips
+let g:UltiSnipsUsePythonVersion = 3
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -278,7 +348,6 @@ let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1
 let g:webdevicons_enable_airline_statusline = 1
 let g:webdevicons_enable_airline_tabline = 1
-let g:webdevicons_enable_ctrlp = 1
 let g:webdevicons_conceal_nerdtree_brackets = 1
 
 " Custom function to change 2 space indent to 4
