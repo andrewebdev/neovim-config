@@ -24,18 +24,18 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Coding
 Plug 'davidhalter/jedi-vim'
-" Plug 'klen/python-mode'
+Plug 'klen/python-mode'
 Plug 'fatih/vim-go'
 Plug 'https://github.com/Shougo/deoplete.nvim.git'
 
 " Syntax, colors and overall look
+Plug 'tomlion/vim-solidity'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'Raimondi/delimitMate'
 Plug 'flazz/vim-colorschemes'
 Plug 'mhinz/vim-janah'
-" Highlight html tags
 Plug 'valloric/MatchTagAlways'
 
 call plug#end()
@@ -55,12 +55,8 @@ highlight ColorColumn guibg=#111111
 highlight ColorColumn ctermbg=255
 
 " Set a default colorscheme
-" colorscheme Tomorrow
-" colorscheme Tomorrow-Night
-" colorscheme soda
-" autocmd ColorScheme janah highlight Normal ctermbg=235
-" colorscheme janah
 colorscheme leya
+" colorscheme Tomorrow-Night
 
 
 " faster redraw
@@ -84,7 +80,6 @@ nnoremap Q <nop>
 
 " Bind nohl
 " Removes highlight of your last search
-" ``<C>`` stands for ``CTRL`` and therefore ``<C-n>`` stands for ``CTRL+n``
 noremap <C-n> :nohl<CR>
 vnoremap <C-n> :nohl<CR>
 inoremap <C-n> :nohl<CR>
@@ -196,8 +191,9 @@ set wildignore+=*_build/*
 set wildignore+=*/coverage/*
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/venv/*
-set wildignore+=*/nginx/*
 set wildignore+=*/venv.*
+set wildignore+=*.png,*.jpg,*.jpeg,*.pdf,*.gif,*.tiff,*.flv,*.mov
+set wildignore+=*.docx
 set wildignore+=*/__pycache__/*
 
 
@@ -208,10 +204,14 @@ set wildignore+=*/__pycache__/*
 " VimWiki
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/', 'path_html': '~/Dropbox/vimwiki_html/'}]
 
+" EditorConfig
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
 
 " NerdTree
 map <F9> :NERDTree<CR>
 let g:NERDTreeRespectWildIgnore = 1
+
 
 " vim-airline settings
 let g:airline_powerline_fonts = 1
@@ -251,10 +251,20 @@ else
         \['ag', '--nofollow', '--nocolor', '--nogroup', '-g', ''])
 endif
 
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
+    \'.git/',
+    \'.ropeproject/',
+    \'__pycache__/',
+    \'*.pyc',
+    \'venv/',
+    \'*.min.*',
+    \'bower_components/',
+    \'node_modules/',
+    \'*.png', '*.jpg', '*.jpeg', '*.pdf', '*.gif', '*.tiff',
+    \'*.flv', '*.mov', '*.docx'])
+
 call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy', 'matcher_ignore_globs'])
-call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-      \['.git/', '.ropeproject/', '__pycache__/', '*.pyc', 'venv/', '*.min.*',
-      \ 'bower_components/', 'node_modules/'])
+call denite#custom#source('file', 'matchers', ['matcher_fuzzy', 'matcher_ignore_globs'])
 
 
 " Denite - Mappings
@@ -294,7 +304,8 @@ let s:menus = {}
 let s:menus.configs = {'description': 'Configs and temp files'}
 let s:menus.configs.file_candidates = [
     \['init.vim', '~/.config/nvim/init.vim'],
-    \['temp.md', '~/temp.md']]
+    \['temp.md', '~/temp.md'],
+    \['devroot EditorConfig', '~/dev/.editorconfig']]
 call denite#custom#var('menu', 'menus', s:menus)
 
 
@@ -319,7 +330,7 @@ let g:pymode_lint_on_write = 0
 " Emmet
 " Only use emmet in html and css files
 let g:user_emmet_install_global = 0
-autocmd FileType xhtml,html,htmldjango,css,less EmmetInstall
+autocmd FileType xhtml,html,htmldjango,css,less,sass EmmetInstall
 
 " Ultisnips
 let g:UltiSnipsUsePythonVersion = 3
@@ -360,11 +371,6 @@ function NewIndent()
     set ts=4 sts=4 et
     retab
 endfunction
-
-
-" Override indentation for yaml files
-au FileType yaml setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
-
 
 " Confluence Wiki (Jira) syntax
 au BufNewFile,BufRead *.jira set filetype=confluencewiki
