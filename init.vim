@@ -26,7 +26,8 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'davidhalter/jedi-vim'
 Plug 'klen/python-mode'
 Plug 'fatih/vim-go'
-Plug 'https://github.com/Shougo/deoplete.nvim.git'
+
+Plug 'https://github.com/Shougo/deoplete.nvim.git', {'do': ':UpdateRemotePlugins'}
 
 " Syntax, colors and overall look
 Plug 'tomlion/vim-solidity'
@@ -360,17 +361,6 @@ let g:webdevicons_enable_nerdtree = 1
 let g:webdevicons_enable_airline_statusline = 1
 let g:webdevicons_enable_airline_tabline = 1
 let g:webdevicons_conceal_nerdtree_brackets = 1
-
-" Custom function to change 2 space indent to 4
-function NewIndent()
-    " Set every 2 spaces to a tab Character
-    set ts=2 sts=2 noet
-    retab!
-
-    " Change every tab back to 4 spaces
-    set ts=4 sts=4 et
-    retab
-endfunction
 
 " Confluence Wiki (Jira) syntax
 au BufNewFile,BufRead *.jira set filetype=confluencewiki
