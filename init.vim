@@ -2,7 +2,6 @@
 call plug#begin('~/.config/nvim/plugged')
 
 " Utility
-Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-capslock'
@@ -21,20 +20,21 @@ Plug 'scrooloose/nerdtree'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'airblade/vim-gitgutter'
 
 " Coding
 Plug 'davidhalter/jedi-vim'
-Plug 'klen/python-mode'
+" Plug 'klen/python-mode'
 Plug 'fatih/vim-go'
-
 Plug 'https://github.com/Shougo/deoplete.nvim.git', {'do': ':UpdateRemotePlugins'}
+Plug 'zchee/deoplete-jedi'
 
 " Syntax, colors and overall look
 Plug 'tomlion/vim-solidity'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
-Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
 Plug 'flazz/vim-colorschemes'
 Plug 'mhinz/vim-janah'
 Plug 'valloric/MatchTagAlways'
@@ -183,8 +183,9 @@ noremap <c-o> <c-w>_ <c-w>\|
 " So I'm not mapping a shortcut for that
 
 " Shortcut to run a command using args on the current line, and paste
-" the output dirjctly into the current buffer
+" the output directly into the current buffer
 noremap <leader>r !!$SHELL<cr>
+
 
 " Global wildignore rules
 set wildignore+=*.pyc
@@ -196,6 +197,11 @@ set wildignore+=*/venv.*
 set wildignore+=*.png,*.jpg,*.jpeg,*.pdf,*.gif,*.tiff,*.flv,*.mov
 set wildignore+=*.docx
 set wildignore+=*/__pycache__/*
+
+
+" Quickly open and close the window list
+nmap <leader>o :lopen<cr>
+
 
 
 " ============================================================================
@@ -224,6 +230,7 @@ let g:airline#extensions#tabline#show_buffers = 0
 " Neomake settings
 autocmd! BufWritePost * Neomake
 let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_javascript_enabled_makers = ['eslint']
 
 
 " Denite
@@ -316,6 +323,8 @@ let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#usages_command = "<leader>u"
+let g:jedi#show_call_signatures = "1"
+let g:jedi#popup_on_dot = 0
 
 " Settings for python-mode
 " disable rope since we use jedi
