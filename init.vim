@@ -28,6 +28,7 @@ Plug 'davidhalter/jedi-vim'
 Plug 'fatih/vim-go'
 Plug 'https://github.com/Shougo/deoplete.nvim.git', {'do': ':UpdateRemotePlugins'}
 Plug 'zchee/deoplete-jedi'
+" Plug 'webdesus/polymer-ide.vim', { 'do': 'npm install' }
 
 " Syntax, colors and overall look
 Plug 'tomlion/vim-solidity'
@@ -192,8 +193,6 @@ set wildignore+=*.pyc
 set wildignore+=*_build/*
 set wildignore+=*/coverage/*
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-set wildignore+=*/venv/*
-set wildignore+=*/venv.*
 set wildignore+=*.png,*.jpg,*.jpeg,*.pdf,*.gif,*.tiff,*.flv,*.mov
 set wildignore+=*.docx
 set wildignore+=*/__pycache__/*
@@ -235,7 +234,8 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 
 " Denite
 nnoremap <leader>f :Denite -mode=normal file<cr>
-nnoremap <leader>F :Denite -mode=normal file_rec<cr>
+nnoremap <leader>F :Denite -mode=insert file_rec<cr>
+nnoremap <c-p> :Denite -mode=insert file_rec<cr>
 nnoremap <leader>b :Denite -mode=normal buffer<cr>
 nnoremap <leader>M :Denite -mode=normal menu<cr>
 
