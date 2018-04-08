@@ -57,8 +57,8 @@ highlight ColorColumn guibg=#111111
 highlight ColorColumn ctermbg=255
 
 " Set a default colorscheme
-colorscheme leya
-" colorscheme Tomorrow-Night
+" colorscheme leya
+colorscheme Tomorrow-Night
 
 
 " faster redraw
@@ -113,7 +113,7 @@ vnoremap > >gv  " better indentation
 
 
 " Show whitespace
-exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+exec "set listchars=tab:\uBB\uBB,space:\uB7,trail:\uB7,nbsp:~"
 set list
 
 
