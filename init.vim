@@ -24,25 +24,29 @@ Plug 'airblade/vim-gitgutter'
 
 " Coding
 Plug 'davidhalter/jedi-vim'
-" Plug 'klen/python-mode'
+Plug 'klen/python-mode'
 Plug 'fatih/vim-go'
 Plug 'https://github.com/Shougo/deoplete.nvim.git', {'do': ':UpdateRemotePlugins'}
 Plug 'zchee/deoplete-jedi'
-" Plug 'webdesus/polymer-ide.vim', { 'do': 'npm install' }
+" Plug 'webdesus/polymer-ide.vim'
 
 " Syntax, colors and overall look
 Plug 'tomlion/vim-solidity'
+Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'jiangmiao/auto-pairs'
 Plug 'flazz/vim-colorschemes'
-Plug 'mhinz/vim-janah'
 Plug 'valloric/MatchTagAlways'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'uarun/vim-protobuf'
+
 
 call plug#end()
 
 " Put your non-Plugin stuff after this line
+set guicursor=
 set nocompatible
 scriptencoding utf8
 set encoding=utf-8
@@ -56,10 +60,11 @@ let &colorcolumn=join(range(80,80),",")
 highlight ColorColumn guibg=#111111
 highlight ColorColumn ctermbg=255
 
-" Set a default colorscheme
-" colorscheme leya
-colorscheme Tomorrow-Night
-
+" Set colorscheme and related options
+colorscheme gruvbox
+let g:gruvbox_contrast_light = "hard"
+let g:gruvbox_contrast_dark = "medium"
+set background=dark
 
 " faster redraw
 set ttyfast
@@ -247,29 +252,32 @@ call denite#custom#option('_', 'highlight_matched_char', 'None')
 
 if executable('rg')
   call denite#custom#var('file_rec', 'command',
-        \['rg', '--files', '--glob', '!.git'])
+    \['rg', '--files', '--glob', '!.git'])
   call denite#custom#var('grep', 'command', ['rg', '--threads', '1'])
   call denite#custom#var('grep', 'recursive_opts', [])
   call denite#custom#var('grep', 'final_opts', [])
   call denite#custom#var('grep', 'separator', ['--'])
   call denite#custom#var('grep', 'default_opts',
-        \['--vimgrep', '--no-heading'])
+    \['--vimgrep', '--no-heading'])
 else
   call denite#custom#var('file_rec', 'command',
-        \['ag', '--nofollow', '--nocolor', '--nogroup', '-g', ''])
+    \['ag', '--nofollow', '--nocolor', '--nogroup', '-g', ''])
 endif
 
 call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
-    \'.git/',
-    \'.ropeproject/',
-    \'__pycache__/',
-    \'*.pyc',
-    \'venv/',
-    \'*.min.*',
-    \'bower_components/',
-    \'node_modules/',
-    \'*.png', '*.jpg', '*.jpeg', '*.pdf', '*.gif', '*.tiff',
-    \'*.flv', '*.mov', '*.docx'])
+  \'.git/',
+  \'.ropeproject/',
+  \'__pycache__/',
+  \'*.pyc',
+  \'venv/',
+  \'*.min.*',
+  \'bower_components/',
+  \'node_modules/',
+  \'static/build/',
+  \'migrations/',
+  \'playbooks/',
+  \'*.png', '*.jpg', '*.jpeg', '*.pdf', '*.gif', '*.tiff',
+  \'*.flv', '*.mov', '*.docx'])
 
 call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy', 'matcher_ignore_globs'])
 call denite#custom#source('file', 'matchers', ['matcher_fuzzy', 'matcher_ignore_globs'])
@@ -277,43 +285,44 @@ call denite#custom#source('file', 'matchers', ['matcher_fuzzy', 'matcher_ignore_
 
 " Denite - Mappings
 call denite#custom#map(
-    \'insert',
-    \'<Esc>',
-    \'<denite:enter_mode:normal>',
-    \'noremap')
+  \'insert',
+  \'<Esc>',
+  \'<denite:enter_mode:normal>',
+  \'noremap')
 call denite#custom#map(
-    \'normal',
-    \'<Esc>',
-    \'<NOP>',
-    \'noremap')
+  \'normal',
+  \'<Esc>',
+  \'<NOP>',
+  \'noremap')
 call denite#custom#map(
-    \'insert',
-    \'<C-v>',
-    \'<denite:do_action:vsplit>',
-    \'noremap')
+  \'insert',
+  \'<C-v>',
+  \'<denite:do_action:vsplit>',
+  \'noremap')
 call denite#custom#map(
-    \'normal',
-    \'<C-v>',
-    \'<denite:do_action:vsplit>',
-    \'noremap')
+  \'normal',
+  \'<C-v>',
+  \'<denite:do_action:vsplit>',
+  \'noremap')
 call denite#custom#map(
-    \'insert',
-    \'<C-j>',
-    \'<denite:move_to_next_line>',
-    \'noremap')
+  \'insert',
+  \'<C-j>',
+  \'<denite:move_to_next_line>',
+  \'noremap')
 call denite#custom#map(
-    \'insert',
-    \'<C-k>',
-    \'<denite:move_to_previous_line>',
-    \'noremap')
+  \'insert',
+  \'<C-k>',
+  \'<denite:move_to_previous_line>',
+  \'noremap')
 
 " Denite - Menus
 let s:menus = {}
 let s:menus.configs = {'description': 'Configs and temp files'}
 let s:menus.configs.file_candidates = [
-    \['init.vim', '~/.config/nvim/init.vim'],
-    \['temp.md', '~/temp.md'],
-    \['devroot EditorConfig', '~/dev/.editorconfig']]
+  \['init.vim', '~/.config/nvim/init.vim'],
+  \['I3WM Config', '~/.config/i3/config'],
+  \['temp.md', '~/temp.md'],
+  \['devroot EditorConfig', '~/dev/.editorconfig']]
 call denite#custom#var('menu', 'menus', s:menus)
 
 

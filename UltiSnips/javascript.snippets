@@ -1,9 +1,34 @@
 snippet obj
 function ${1:MyObject}(data) {
-	${2:this.attribute = "value";}
+  ${2:this.attribute = "value";}
 }
 $1.prototype.someMethod = function() {
-	$0
+  $0
 }
 endsnippet
 
+snippet polyel
+class ${1:MyElement} extends PolymerElement {
+  connectedCallback() {
+    super.connectedCallback();
+  }
+
+  ready() {
+    super.ready();
+  }
+}
+
+customElements.define('${2:my-element}', $1);
+endsnippet
+
+snippet customStyle
+import { htmlLiteral } from '@polymer/polymer/lib/utils/html-tag.js';
+
+if (!document.getElementById('${1:uniqueID}')) {
+  let _styles = document.createElement('template');
+  _styles.innerHTML = htmlLiteral\`<custom-style id="$1">
+    $2
+  </custom-style>\`;
+  document.head.appendChild(_styles.content);
+}
+endsnippet
