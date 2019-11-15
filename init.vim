@@ -13,6 +13,7 @@ Plug 'tomtom/tlib_vim'
 Plug 'mattn/emmet-vim'
 Plug 'mhinz/vim-grepper'
 Plug 'vimwiki/vimwiki'
+Plug 'Rykka/riv.vim'
 
 " NerdTree
 Plug 'scrooloose/nerdtree'
@@ -20,30 +21,33 @@ Plug 'scrooloose/nerdtree'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'airblade/vim-gitgutter'
 
 " Coding
 Plug 'davidhalter/jedi-vim'
 Plug 'klen/python-mode'
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'https://github.com/Shougo/deoplete.nvim.git', {'do': ':UpdateRemotePlugins'}
 Plug 'zchee/deoplete-jedi'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
 " Plug 'webdesus/polymer-ide.vim'
 
 " Syntax, colors and overall look
-Plug 'tomlion/vim-solidity'
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'airblade/vim-gitgutter'
 Plug 'ryanoasis/vim-devicons'
 Plug 'jiangmiao/auto-pairs'
 Plug 'flazz/vim-colorschemes'
 Plug 'valloric/MatchTagAlways'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'uarun/vim-protobuf'
+Plug 'tomlion/vim-solidity'
 
 
 call plug#end()
+
 
 " Put your non-Plugin stuff after this line
 set guicursor=
@@ -52,7 +56,6 @@ scriptencoding utf8
 set encoding=utf-8
 
 " This should be done BEFORE setting the colour scheme
-set termguicolors  " enable true colour in neovim
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Show the safe character limit
@@ -150,8 +153,9 @@ set shiftwidth=4
 set shiftround
 set expandtab
 
-" Automatic spell checking in markdown files
+" Automatic spell checking in markup files
 autocmd BufRead,BufNewFile *.md setlocal spell complete+=kspell
+autocmd BufRead,BufNewFile *.rst setlocal spell complete+=kspell
 
 " Space vs Tab Switching
 " Some people and projects insist on tabs however, so this
@@ -174,6 +178,7 @@ set smartcase
 set nobackup
 set nowritebackup
 set noswapfile
+" set backupcopy=yes
 
 
 " Syntax highligting
@@ -201,6 +206,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*.png,*.jpg,*.jpeg,*.pdf,*.gif,*.tiff,*.flv,*.mov
 set wildignore+=*.docx
 set wildignore+=*/__pycache__/*
+set wildignore+=*db_data*
 
 
 " Quickly open and close the window list
@@ -214,6 +220,11 @@ nmap <leader>o :lopen<cr>
 
 " VimWiki
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/', 'path_html': '~/Dropbox/vimwiki_html/'}]
+
+" Riv - Similair to vimwiki but uses restructuredtext. Also has functions and
+" tools for editing rst files in general
+let rivwiki = {'path': '~/Dropbox/rivwiki/'}
+let g:riv_projects = [rivwiki]
 
 " EditorConfig
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
@@ -238,11 +249,28 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 
 
 " Denite
-nnoremap <leader>f :Denite -mode=normal file<cr>
-nnoremap <leader>F :Denite -mode=insert file_rec<cr>
-nnoremap <c-p> :Denite -mode=insert file_rec<cr>
-nnoremap <leader>b :Denite -mode=normal buffer<cr>
-nnoremap <leader>M :Denite -mode=normal menu<cr>
+nnoremap <leader>f :Denite file<cr>
+nnoremap <c-p> :Denite file/rec<cr>
+nnoremap <leader>b :Denite buffer<cr>
+nnoremap <leader>M :Denite menu<cr>
+
+" Define mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+endfunction
+
 
 " Denite - Options
 call denite#custom#option('default', {'prompt': '❯'})
@@ -251,7 +279,7 @@ call denite#custom#option('_', 'highlight_matched_range', 'None')
 call denite#custom#option('_', 'highlight_matched_char', 'None')
 
 if executable('rg')
-  call denite#custom#var('file_rec', 'command',
+  call denite#custom#var('file/rec', 'command',
     \['rg', '--files', '--glob', '!.git'])
   call denite#custom#var('grep', 'command', ['rg', '--threads', '1'])
   call denite#custom#var('grep', 'recursive_opts', [])
@@ -260,7 +288,7 @@ if executable('rg')
   call denite#custom#var('grep', 'default_opts',
     \['--vimgrep', '--no-heading'])
 else
-  call denite#custom#var('file_rec', 'command',
+  call denite#custom#var('file/rec', 'command',
     \['ag', '--nofollow', '--nocolor', '--nogroup', '-g', ''])
 endif
 
@@ -274,12 +302,13 @@ call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
   \'bower_components/',
   \'node_modules/',
   \'static/build/',
+  \'static/dist/',
   \'migrations/',
-  \'playbooks/',
+  \'*db_data*',
   \'*.png', '*.jpg', '*.jpeg', '*.pdf', '*.gif', '*.tiff',
   \'*.flv', '*.mov', '*.docx'])
 
-call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy', 'matcher_ignore_globs'])
+call denite#custom#source('file/rec', 'matchers', ['matcher_fuzzy', 'matcher_ignore_globs'])
 call denite#custom#source('file', 'matchers', ['matcher_fuzzy', 'matcher_ignore_globs'])
 
 
@@ -321,8 +350,10 @@ let s:menus.configs = {'description': 'Configs and temp files'}
 let s:menus.configs.file_candidates = [
   \['init.vim', '~/.config/nvim/init.vim'],
   \['I3WM Config', '~/.config/i3/config'],
-  \['temp.md', '~/temp.md'],
-  \['devroot EditorConfig', '~/dev/.editorconfig']]
+  \['BashRC', '~/.bashrc'],
+  \['XResources', '~/.Xresources'],
+  \['devroot EditorConfig', '~/dev/.editorconfig'],
+  \['temp.md', '~/temp.md']]
 call denite#custom#var('menu', 'menus', s:menus)
 
 
