@@ -30,7 +30,7 @@ Plug 'https://github.com/Shougo/deoplete.nvim.git', {'do': ':UpdateRemotePlugins
 Plug 'zchee/deoplete-jedi'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
-" Plug 'webdesus/polymer-ide.vim'
+Plug 'calviken/vim-gdscript3'
 
 " Syntax, colors and overall look
 Plug 'morhetz/gruvbox'
@@ -387,6 +387,7 @@ let g:UltiSnipsUsePythonVersion = 3
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#jedi#python_path = 'python3'
 
 " Better navigating through omnicomplete option list
 " See http://stackoverflow.com/questions/2170023/how-to-map-keys-for-popup-menu-in-vim
